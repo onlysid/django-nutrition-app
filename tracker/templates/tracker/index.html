@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food!</title>
+</head>
+<body>
+    <form method="POST">
+        {% csrf_token %}
+        <p>Select food to add: </p>
+        <select name="foodConsumed" id="foodConsumed">
+            {% for food in foods %}
+                <option value="{{ food.id }}">{{ food.name }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Add</button>
+    </form>
+    <br>
+    <table>
+        <thead>
+            <th>Food</th>
+            <th>Carbs</th>
+            <th>Protein</th>
+            <th>Fats</th>
+            <th>Calories</th>
+        </thead>
+        {% for c in consumed_food %}
+            <tr>
+                <td>{{ c.food.name }}</td>
+                <td>{{ c.food.carbs }}</td>
+                <td>{{ c.food.protein }}</td>
+                <td>{{ c.food.fats }}</td>
+                <td>{{ c.food.calories }}</td>
+                <td>
+                    <form method="GET">
+                        <button type="submit" name="delete" value="{{ c.id }}">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
